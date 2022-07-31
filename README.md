@@ -1,5 +1,9 @@
 # jindong
 
+# 技术选型
+BEM代码命名风格
+即block__element--modifier
+
 ## Project setup
 ```
 npm install
