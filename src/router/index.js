@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/home/HomeView.vue'
-import LoginView from '../views/login/LoginView.vue'
-import RegisterView from '../views/register/RegisterView.vue'
 
 const routes = [
   {
@@ -10,9 +8,14 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/shop/:id',
+    name: 'ShopView',
+    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/ShopView.vue')
+  },
+  {
     path: '/login',
     name: 'LoginView',
-    component: LoginView,
+    component: () => import(/* webpackChunkName: "login" */ '../views/login/LoginView.vue'),
     beforeEnter: (to, from, next) => {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'HomeView' }) : next()
@@ -21,11 +24,11 @@ const routes = [
   {
     path: '/register',
     name: 'RegisterView',
-    component: RegisterView
-    // beforeEnter: (to, from, next) => {
-    //   const { isLogin } = localStorage
-    //   isLogin ? next({ name: 'HomeView' }) : next()
-    // }
+    component: () => import(/* webpackChunkName: "register" */ '../views/register/RegisterView.vue'),
+    beforeEnter: (to, from, next) => {
+      const { isLogin } = localStorage
+      isLogin ? next({ name: 'Home' }) : next()
+    }
   }
 ]
 

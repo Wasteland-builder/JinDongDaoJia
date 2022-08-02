@@ -39,7 +39,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: .49rem;
-    border-top: .01rem solid $content-bgColor;
+    border-top: .01rem solid $content-bgcolor;
     color: $content-fontcolor;
 
     &__item {

@@ -36,7 +36,7 @@ export default {
   .gap {
     height: .1rem;
     margin: 0 -.18rem;
-    background-color: $content-bgColor;
+    background-color: $content-bgcolor;
   }
 }
 </style>
