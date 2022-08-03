@@ -12,6 +12,7 @@
     </div>
     <ShopInfo :item="item" :hideBorder="true" v-show="item.imgUrl "></ShopInfo>
     <ContentView></ContentView>
+    <CartView></CartView>
 </div>
 </template>
 
@@ -19,6 +20,7 @@
 import { reactive, toRefs } from 'vue'
 import ShopInfo from '../../components/ShopInfo.vue'
 import ContentView from './ContentView.vue'
+import CartView from './CartView.vue'
 import { get } from '../../utils/request'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -37,7 +39,7 @@ const useShopInfoEffect = () => {
 }
 export default {
   name: 'ShowView',
-  components: { ShopInfo, ContentView },
+  components: { ShopInfo, ContentView, CartView },
   setup () {
     const router = useRouter()
 

@@ -25,9 +25,17 @@
                     </p>
                 </div>
                 <div class="product__number">
-                    <span class="product__number__minus">-</span>
-                    <span class="product__number__num">0</span>
-                    <span class="product__number__plus">+</span>
+                    <span
+                      class="product__number__minus"
+                      @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
+                    >-</span>
+                    <span class="product__number__num">
+                        {{ cartList?.[shopId]?.[item._id]?.count || 0}}
+                    </span>
+                    <span
+                      class="product__number__plus"
+                      @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
+                    >+</span>
                 </div>
             </div>
         </div>
@@ -36,8 +44,10 @@
 </template>
 
 <script>
+import store from '@/store'
 import { reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { get } from '../../utils/request'
 
 const CATEGORIES = [
@@ -45,6 +55,11 @@ const CATEGORIES = [
   { name: '秒杀', tab: 'seckill' },
   { name: '新鲜水果', tab: 'fruit' }
 ]
+const useCartEffect = () => {
+  const store = useStore()
+  const { cartList } = toRefs(store.state)
+  return { cartList }
+}
 
 export default {
   name: 'ContentView',
@@ -59,13 +74,30 @@ export default {
         data.contentList = result.data
       }
     }
+    const shopId = route.params.id
     const handleCategoryClick = (tab) => {
       getContentData(tab)
       data.currentTab = tab
     }
     getContentData('all')
     const { contentList, currentTab } = toRefs(data)
-    return { contentList, CATEGORIES, handleCategoryClick, currentTab }
+
+    const { cartList } = useCartEffect()
+
+    const changeCartItemInfo = (shopId, productId, productInfo, num) => {
+      store.commit('changeCartItemInfo', {
+        shopId, productId, productInfo, num
+      })
+    }
+    return {
+      contentList,
+      CATEGORIES,
+      handleCategoryClick,
+      changeCartItemInfo,
+      currentTab,
+      cartList,
+      shopId
+    }
   }
 }
 </script>
@@ -79,13 +111,13 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    top: 1.4rem;
+    top: 1.3rem;
     bottom: .5rem;
 }
 
 .category {
     overflow-y: scroll;
-    height: 100%;
+    // height: 100%;
     width: .76rem;
     background-color: $search-bgcolor;
 
