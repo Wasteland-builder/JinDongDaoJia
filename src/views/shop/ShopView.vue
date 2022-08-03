@@ -11,7 +11,7 @@
         </div>
     </div>
     <ShopInfo :item="item" :hideBorder="true" v-show="item.imgUrl "></ShopInfo>
-    <ContentView></ContentView>
+    <ContentView :shopName="item.name"></ContentView>
     <CartView></CartView>
 </div>
 </template>

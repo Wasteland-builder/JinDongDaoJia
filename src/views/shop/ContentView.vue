@@ -27,14 +27,14 @@
                 <div class="product__number">
                     <span
                       class="product__number__minus"
-                      @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
+                      @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }"
                     >-</span>
                     <span class="product__number__num">
-                        {{ cartList?.[shopId]?.[item._id]?.count || 0}}
+                        {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0}}
                     </span>
                     <span
                       class="product__number__plus"
-                      @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
+                      @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }"
                     >+</span>
                 </div>
             </div>
@@ -63,6 +63,7 @@ const useCartEffect = () => {
 
 export default {
   name: 'ContentView',
+  props: ['shopName'],
   setup () {
     const data = reactive({ contentList: [], currentTab: CATEGORIES[0].tab })
 
@@ -89,14 +90,25 @@ export default {
         shopId, productId, productInfo, num
       })
     }
+
+    const changeShopName = (shopId, shopName) => {
+      store.commit('changeShopName', {
+        shopId, shopName
+      })
+    }
+
+    const changeCartItem = (shopId, productId, item, num, shopName) => {
+      changeCartItemInfo(shopId, productId, item, num)
+      changeShopName(shopId, shopName)
+    }
     return {
       contentList,
       CATEGORIES,
       handleCategoryClick,
-      changeCartItemInfo,
       currentTab,
       cartList,
-      shopId
+      shopId,
+      changeCartItem
     }
   }
 }
@@ -111,7 +123,7 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    top: 1.3rem;
+    top: 1.4rem;
     bottom: .5rem;
 }
 
