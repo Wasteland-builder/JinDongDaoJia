@@ -16,7 +16,6 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-
 import { post } from '../../utils/request'
 import ToastCpn, { useToastEffect } from '../../components/ToastCpn.vue'
 
