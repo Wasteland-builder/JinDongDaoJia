@@ -8,6 +8,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/orderConfirmation/:id',
+    name: 'OrderConfirmation',
+    component: () => import(/* webpackChunkName: "order" */ '../views/order/OrderConfirmation.vue')
+  },
+  {
     path: '/shop/:id',
     name: 'ShopView',
     component: () => import(/* webpackChunkName: "shop" */ '../views/shop/ShopView.vue')
@@ -15,7 +20,7 @@ const routes = [
   {
     path: '/cartList',
     name: 'CartList',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/cartList/CartList.vue')
+    component: () => import(/* webpackChunkName: "cart" */ '../views/cartList/CartList.vue')
   },
   {
     path: '/login',

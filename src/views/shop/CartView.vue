@@ -49,7 +49,7 @@
         总计：<span class="check__info__price">&yen;{{ calculations.price }}</span>
       </div>
       <div class="check__btn">
-        <router-link :to="{ 'name': 'HomeView' }">去结算</router-link>
+        <router-link :to="{ path: `/orderConfirmation/${shopId}` }">去结算</router-link>
       </div>
     </div>
   </div>
@@ -59,32 +59,13 @@
 import { ref } from 'vue'
 import { computed } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
-import useCommonCartEffect from './commonCartEffect'
+import useCommonCartEffect from '../../utils/cartEffects'
 export default {
   name: 'CartView',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { cartList, changeCartItemInfo, store } = useCommonCartEffect()
-    console.log(cartList)
-    const calculations = computed(() => {
-      const result = { total: 0, price: 0, allChecked: true }
-      const productList = cartList[shopId]?.productList
-      if (productList) {
-        for (const i in productList) {
-          const product = productList[i]
-          result.total += product.count
-          if (product.checked) {
-            result.price += product.count * product.price
-          }
-          if (!product.checked && product.count > 0) {
-            result.allChecked = false
-          }
-        }
-      }
-      result.price = result.price.toFixed(2)
-      return result
-    })
+    const { cartList, changeCartItemInfo, store, calculations } = useCommonCartEffect(shopId)
 
     const contentList = computed(() => {
       const productList = cartList[shopId]?.productList || []

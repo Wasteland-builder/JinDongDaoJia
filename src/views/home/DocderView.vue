@@ -43,6 +43,7 @@ export default {
     height: .49rem;
     border-top: .01rem solid $content-bgcolor;
     &__item {
+        -webkit-tap-highlight-color: transparent; // 解决点击后背景颜色变化问题
         flex: 1;
         text-align: center;
         a {

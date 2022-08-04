@@ -27,7 +27,6 @@ export default createStore({
         product.count = 0
       }
       product.count += num
-      console.log(state.cartList)
       if (num > 0) { product.checked = true }
       if (product.count < 0) { product.count = 0 }
       shopInfo.productList[productId] = product
